@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mandos_app/screens/energy_monitor.dart';
+
+import 'package:mandos_app/screens/shopping_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,18 +19,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
 class _MainPageState extends State<MainPage> {
-  String _title = 'Primera';
-  int _indexPage = 0;
-  Widget _view;
-  Widget _firstView = Center(child: Text('Primera Vista'));
-  Widget _secondView = Center(child: Text('Segunda Vista'));
+  static final _views = [
+    { 'name': 'Lista de compras', 'view': ShoppingListPage()},
+    { 'name': 'Monitor de consumo', 'view': EnergyMonitorPage()}
+  ];
+  Widget _view = _views.first['view'];
+  String _title = _views.first['name'];
 
   void _selectFeature(int index) {
     setState(() {
-      _indexPage = index;
-      _view = _indexPage == 0 ? _firstView : _secondView;
-      _title = _indexPage == 0 ? 'Primera' : 'Segunda';
+      final view = _views.elementAt(index);
+      _view = view['view'];
+      _title = view['name'];
     });
   }
   @override
@@ -58,15 +67,14 @@ class _MainPageState extends State<MainPage> {
                 )
             ),
             ListTile(
-              title: Text('Lista de compras'),
+              title: Text(_views.elementAt(0)['name']),
               onTap: () {
-
                 Navigator.pop(context);
                 _selectFeature(0);
               },
             ),
             ListTile(
-              title: Text('Monitor de consumo'),
+              title: Text(_views.elementAt(1)['name']),
               onTap: () {
                 Navigator.pop(context);
                 _selectFeature(1);
@@ -78,9 +86,4 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-}
-
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
 }
