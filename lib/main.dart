@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mandos_app/screens/devices.dart';
 import 'package:mandos_app/screens/energy_monitor.dart';
 
 import 'package:mandos_app/screens/shopping_list.dart';
@@ -27,6 +28,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   static final _views = [
     { 'name': 'Lista de compras', 'view': ShoppingListPage()},
+    { 'name': 'Dispositivos', 'view': DevicesPage()},
     { 'name': 'Monitor de consumo', 'view': EnergyMonitorPage()}
   ];
   Widget _view = _views.first['view'];
@@ -78,6 +80,13 @@ class _MainPageState extends State<MainPage> {
               onTap: () {
                 Navigator.pop(context);
                 _selectFeature(1);
+              },
+            ),
+            ListTile(
+              title: Text(_views.elementAt(2)['name']),
+              onTap: () {
+                Navigator.pop(context);
+                _selectFeature(2);
               },
             )
           ],

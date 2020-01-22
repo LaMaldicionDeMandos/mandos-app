@@ -4,3 +4,10 @@ class ShoppingItem {
   ShoppingItem(this.id, this.name);
   ShoppingItem.fromJson(Map json) :this(json['id'], json['name']);
 }
+
+class Device {
+  final String id, name, state, model, voltage, current, power;
+
+  Device(this.id, this.name, this.state, this.model, this.voltage, this.current, this.power);
+  Device.fromJson(Map json) : this(json['id'], json['name'], json['state'], json['model'], json['voltage'], json['current'], json['power']);
+}

@@ -17,8 +17,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final ShoppingListService service = globals.shoppingListService;
   List<ShoppingItem> items = [];
 
-  Future<List<ShoppingItem>> _fetchItems() async {
-    return await service.get();
+  Future<List<ShoppingItem>> _fetchItems() async{
+    return service.get();
   }
 
   @override
