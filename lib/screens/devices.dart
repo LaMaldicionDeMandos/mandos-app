@@ -44,10 +44,45 @@ class _DevicesPageState extends State<DevicesPage> {
           final item = data[index].name;
           return Container(
                 padding: const EdgeInsets.all(20),
-                child: Text('${data[index].name[0].toUpperCase()}${data[index].name.substring(1)}',
-                    style: TextStyle(fontSize: 18.0, ))
+                child: _ListTile(device: data[index])
           );
         });
+  }
+
+}
+
+class _ListTileState extends State<_ListTile> {
+  @override
+  Widget build(BuildContext context) {
+    bool on = widget.device.state == 'on';
+    return ListTile(
+        title: Text('${widget.device.name[0].toUpperCase()}${widget.device.name.substring(1)}',
+            style: TextStyle(fontSize: 18.0, )),
+        trailing: FloatingActionButton(
+            backgroundColor: on ? Colors.greenAccent : Colors.white70,
+            child: Icon(Icons.power_settings_new, color: on ? Colors.white : Colors.black26),
+            onPressed: () {
+              globals.devicesService.changeState(widget.device)
+                  .then((state) {
+                    setState(() {
+                      widget.device.state = state;
+                    });
+              });
+            },
+        )
+    );
+  }
+
+}
+
+class _ListTile extends StatefulWidget {
+  Device device;
+
+  _ListTile({Key key, this.device}): super(key: key);
+
+  @override
+  _ListTileState createState() {
+    return _ListTileState();
   }
 
 }
