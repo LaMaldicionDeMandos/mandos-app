@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:mandos_app/globals.dart' as globals;
@@ -13,7 +15,15 @@ class DevicesPage extends StatefulWidget {
 
 class _DevicesPageState extends State<DevicesPage> {
   final DevicesService service = globals.devicesService;
+  Timer timer;
   List<Device> items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    const time = const Duration(seconds: 5);
+    timer = new Timer.periodic(time, (Timer t) => setState((){}));
+  }
 
   Future<List<Device>> _fetchItems() async{
     return service.list();
@@ -44,20 +54,22 @@ class _DevicesPageState extends State<DevicesPage> {
           final item = data[index].name;
           return Container(
                 padding: const EdgeInsets.all(20),
-                child: _ListTile(device: data[index])
+                child: _BasicDeviceTile(device: data[index])
           );
         });
   }
 
 }
 
-class _ListTileState extends State<_ListTile> {
+class _BasicDeviceTileState extends State<_BasicDeviceTile> {
   @override
   Widget build(BuildContext context) {
     bool on = widget.device.state == 'on';
+    Widget subtitle = Text(widget.device.model == 'Pow_R2' && on ? 'Consumo: ${widget.device.power}W' : '');
     return ListTile(
         title: Text('${widget.device.name[0].toUpperCase()}${widget.device.name.substring(1)}',
             style: TextStyle(fontSize: 18.0, )),
+        subtitle: subtitle,
         trailing: FloatingActionButton(
             backgroundColor: on ? Colors.greenAccent : Colors.white70,
             child: Icon(Icons.power_settings_new, color: on ? Colors.white : Colors.black26),
@@ -75,14 +87,14 @@ class _ListTileState extends State<_ListTile> {
 
 }
 
-class _ListTile extends StatefulWidget {
+class _BasicDeviceTile extends StatefulWidget {
   Device device;
 
-  _ListTile({Key key, this.device}): super(key: key);
+  _BasicDeviceTile({Key key, this.device}): super(key: key);
 
   @override
-  _ListTileState createState() {
-    return _ListTileState();
+  _BasicDeviceTileState createState() {
+    return _BasicDeviceTileState();
   }
 
 }

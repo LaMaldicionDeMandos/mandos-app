@@ -10,5 +10,5 @@ class Device {
   String state;
 
   Device(this.id, this.name, this.state, this.model, this.voltage, this.current, this.power);
-  Device.fromJson(Map json) : this(json['_id'], json['name'], json['state'], json['model'], json['voltage'], json['current'], json['power']);
+  Device.fromJson(Map json) : this(json['id'], json['name'], json['state'], json['model'], json['voltage'], json['current'], json['power']);
 }
